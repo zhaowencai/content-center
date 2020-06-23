@@ -1,0 +1,4 @@
+# 改成上面FileDataSourceInit的包名类名全路径即可。
+# 拉模式规则持久化类全路径
+com.neo.contentcenter.sentineltest.FileDataSourceInit
+

@@ -1,0 +1,40 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--指定读取配置信息的文件路径-->
+    <properties resource="generator/config.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <!--通用 mapper 提供对 lombok 的简单整合，能在生成的实体类上添加@Data注解-->
+            <property name="lombok" value="Data,Builder,NoArgsConstructor,AllArgsConstructor"/>
+        </plugin>
+        <!--数据库连接信息从配置文件中读取-->
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!--指定生成实体的目标存放位置-->
+        <javaModelGenerator targetPackage="com.neo.contentcenter.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--为mapper.xml指定存放路径-->
+        <sqlMapGenerator targetPackage="com.neo.contentcenter.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--为mapper接口指定存放路径-->
+        <javaClientGenerator targetPackage="com.neo.contentcenter.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+        <!--指定要生成代码的表名-->
+        <table tableName="${tableName}">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
